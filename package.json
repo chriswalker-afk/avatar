@@ -1,0 +1,12 @@
+{
+  "name": "critter-lab",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Standalone Sampling Arcade animal avatar creator",
+  "scripts": {
+    "test": "node --test tests/model.test.mjs",
+    "check": "npm test && node --check src/app.js && node --check src/model.js"
+  },
+  "engines": { "node": ">=20" }
+}
