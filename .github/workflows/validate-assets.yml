@@ -1,4 +1,4 @@
-name: Validate Critter Lab artwork
+name: Validate Critter Lab
 on:
   push:
     branches: ["main", "feature/**"]
@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 jobs:
-  validate:
+  artwork:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -15,7 +15,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install validation dependencies
+      - name: Install SVG validation dependencies
         run: python -m pip install -r requirements-test.txt
       - name: Audit SVG parts, joins, combinations and palettes
         run: python tests/validate_library.py
+  creator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Unit tests and JavaScript syntax checks
+        run: npm run check
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install browser test runner
+        run: python -m pip install 'playwright>=1.55,<2'
+      - name: Install Chromium and system libraries
+        run: python -m playwright install --with-deps chromium
+      - name: Real-browser desktop and mobile smoke checks
+        run: python tests/browser_smoke.py
