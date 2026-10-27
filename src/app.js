@@ -152,7 +152,7 @@ function createPartButton(layer, id) {
   const image = document.createElement('img');
   image.src = resourcePath(layer.collection, id);
   image.alt = '';
-  image.loading = 'lazy';
+  image.loading = 'eager';
   image.decoding = 'async';
   const label = document.createElement('span');
   label.textContent = labelOf(id);
